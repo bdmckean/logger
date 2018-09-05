@@ -9,9 +9,6 @@ import struct
 
 class LogRecordStreamHandler(socketserver.StreamRequestHandler):
     """Handler for a streaming logging request.
-
-    This basically logs the record using whatever logging policy is
-    configured locally.
     """
 
     def handle(self):
@@ -75,14 +72,14 @@ class LogRecordSocketReceiver(socketserver.ThreadingTCPServer):
                 self.handle_request()
             abort = self.abort
 
-def main():
+def run_logger():
     logging.basicConfig(
         format='%(relativeCreated)5d %(name)-15s %(levelname)-8s %(message)s')
     tcpserver = LogRecordSocketReceiver()
 
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
-    pipe_logger = logging.getLogger('pipeline')
+    pipe_logger = logging.getLogger('project')
     pipe_logger.setLevel(logging.INFO)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
     request_log = logging.getLogger("requests")
@@ -97,4 +94,4 @@ def main():
     tcpserver.serve_until_stopped()
 
 if __name__ == '__main__':
-    main()
+    run_logger()
