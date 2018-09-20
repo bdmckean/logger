@@ -86,7 +86,7 @@ def run_logger():
     request_log.setLevel(logging.WARNING)
     urllib3_log = logging.getLogger("urllib3")
     urllib3_log.setLevel(logging.CRITICAL)
-    h = logging.handlers.RotatingFileHandler('/var/log/project/log.log', 'a', maxBytes=500*1024, backupCount=10)
+    h = logging.handlers.RotatingFileHandler('/var/log/project/log.log', 'a', maxBytes=20*1024*1024, backupCount=10)
     f = logging.Formatter('%(asctime)s %(processName)-10s %(name)s %(levelname)-8s %(message)s')
     h.setFormatter(f)
     pipe_logger.addHandler(h)
